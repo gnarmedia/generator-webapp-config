@@ -6,7 +6,7 @@ var yosay = require('yosay');
 var chalk = require('chalk');
 var Configstore = require('configstore');
 var pkg = require('../package.json');
-var pkgName = pkg.name;
+var pkgName = "generator-webapp";
 
 // Init a Configstore instance with an unique ID eg. package name
 // and optionally some default values
