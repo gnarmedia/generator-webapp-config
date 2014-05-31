@@ -8,8 +8,6 @@ var Configstore = require('configstore');
 var pkg = require('../package.json');
 var pkgName = "generator-webapp";
 
-// Init a Configstore instance with an unique ID eg. package name
-// and optionally some default values
 var conf = new Configstore(pkgName, {});
 
 var WebappConfigGenerator = yeoman.generators.Base.extend({
