@@ -23,10 +23,10 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "configstore": "~0.3.0",
     "yeoman-generator": "~0.16.0",
     "chalk": "~0.4.0",
-    "yosay": "^0.1.0"
+    "yosay": "^0.1.0",
+    "configstore": "~0.3.0"
   },
   "devDependencies": {
     "mocha": "*"
