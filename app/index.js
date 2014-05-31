@@ -4,18 +4,15 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
+var Configstore = require('configstore');
+var pkg = require('../package.json');
+var pkgName = pkg.name;
 
+// Init a Configstore instance with an unique ID eg. package name
+// and optionally some default values
+var conf = new Configstore(pkgName, {});
 
 var WebappConfigGenerator = yeoman.generators.Base.extend({
-  init: function () {
-    this.pkg = require('../package.json');
-
-    this.on('end', function () {
-      if (!this.options['skip-install']) {
-        this.installDependencies();
-      }
-    });
-  },
 
   askFor: function () {
     var done = this.async();
@@ -32,51 +29,41 @@ var WebappConfigGenerator = yeoman.generators.Base.extend({
       type: 'input',
       name: 'styles',
       message: 'Set the styles directory:',
-      default: 'css'
+      default: 'styles'
     },{
       type: 'input',
       name: 'scripts',
       message: 'Set the scripts directory:',
-      default: 'js'
+      default: 'scripts'
     },{
       type: 'input',
       name: 'images',
       message: 'Set the images directory:',
-      default: 'img'
+      default: 'images'
     },{
       type: 'input',
       name: 'vendor',
       message: 'Set the vendor directory:',
       default: 'vendor'
-    },{
-      type: 'input',
-      name: 'config',
-      message: 'Save the config json to:',
-      default: 'webapp-config.json'
     }];
 
     this.prompt(prompts, function (props) {
-      var config = {};
+
       if (props.assets.length) {
-        config.assets  = props.assets;
+        conf.set('assets', props.assets);
       }
-      config.styles  = props.styles;
-      config.scripts = props.scripts;
-      config.images  = props.images;
-      config.vendor  = props.vendor;
 
-      this.configFile  = props.config;
-
-      console.log(config);
-
-      this.config = config;
+      conf.set('styles', props.styles);
+      conf.set('scripts', props.scripts);
+      conf.set('images', props.images);
+      conf.set('vendor', props.vendor);
 
       done();
     }.bind(this));
   },
 
   app: function () {
-    this.write(this.configFile, JSON.stringify(this.config));
+    console.log("configuration saved to " + conf.path)
   }
 });
 
